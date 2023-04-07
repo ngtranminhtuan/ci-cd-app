@@ -11,9 +11,8 @@ ENV PYTHONUNBUFFERED 1
 # RUN apk update && apk add --no-cache postgresql-dev
 # RUN apk add linux-headers
 
-RUN apt-get update && \
-    apt-get install -y libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk install -y libpq-dev
 
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./requirements.txt /tmp/requirements.txt
