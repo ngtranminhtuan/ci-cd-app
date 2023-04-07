@@ -6,13 +6,10 @@ ENV PYTHONUNBUFFERED 1
 # ENV http_proxy 'http://proxy.mei.co.jp:8080'
 # ENV https_proxy 'http://proxy.mei.co.jp:8080'
 
-# RUN apk update && \
-#     apk add build-base
-# RUN apk update && apk add --no-cache postgresql-dev
-# RUN apk add linux-headers
-
 RUN apk update && \
-    apk add libpq-dev
+    apk add build-base
+RUN apk update && apk add --no-cache postgresql-dev
+RUN apk add linux-headers
 
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./requirements.txt /tmp/requirements.txt
