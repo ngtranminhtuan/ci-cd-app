@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED 1
 # RUN apk add linux-headers
 
 RUN apk update && \
-    apk install libpq-dev
+    apk add libpq-dev
 
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./requirements.txt /tmp/requirements.txt
