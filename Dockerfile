@@ -3,8 +3,8 @@ LABEL maintainer="845261"
 
 ENV PYTHONUNBUFFERED 1
 
-# ENV http_proxy 'http://proxy.mei.co.jp:8080'
-# ENV https_proxy 'http://proxy.mei.co.jp:8080'
+ENV http_proxy 'http://proxy.mei.co.jp:8080'
+ENV https_proxy 'http://proxy.mei.co.jp:8080'
 
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./requirements.txt /tmp/requirements.txt
