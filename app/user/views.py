@@ -11,7 +11,7 @@ from user.serializers import (
     AuthTokenSerializer,
 )
 
-from user.serializers import UserSerializer
+# from user.serializers import UserSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
