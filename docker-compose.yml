@@ -8,7 +8,7 @@ services:
       args:
         - DEV=true
     ports:
-      - "8000:8000"
+      - "80:8000"
     volumes:
       - ./app:/app
       # - dev-static-data:/vol/web
@@ -29,6 +29,7 @@ services:
     image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgresql/data
+      - dev-static-data:/vol/web
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser

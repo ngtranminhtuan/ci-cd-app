@@ -3,32 +3,29 @@ LABEL maintainer="845261"
 
 ENV PYTHONUNBUFFERED 1
 
-# ENV http_proxy 'http://proxy.mei.co.jp:8080'
-# ENV https_proxy 'http://proxy.mei.co.jp:8080'
-
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
-COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements.txt requirements.txt
 COPY ./app /app
+COPY ./scripts /scripts
 WORKDIR /app
 EXPOSE 8000
 
-ARG DEV=false
 RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client jpeg-dev && \
-    apk add --update --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
-    /py/bin/pip install -r /tmp/requirements.txt && \
-    if [ $DEV = "true" ]; \
-        then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
-    fi && \
-    rm -rf /tmp && \
-    apk del .tmp-build-deps && \
-    adduser \
-        --disabled-password \
-        --no-create-home \
-        django-user
+    /py/bin/pip install --upgrade pip setuptools && \
+    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache --virtual .tmp-deps \
+        build-base postgresql-dev musl-dev linux-headers && \
+    /py/bin/pip install -r /requirements.txt && \
+    apk del .tmp-deps && \
+    adduser --disabled-password --no-create-home app && \
+    mkdir -p /vol/web/static && \
+    mkdir -p /vol/web/media && \
+    chown -R app:app /vol && \
+    chmod -R 755 /vol && \
+    chmod -R +x /scripts
 
-ENV PATH="/py/bin:$PATH"
+ENV PATH="/scripts:/py/bin:$PATH"
 
-USER django-user
+USER app
+
+CMD ["run.sh"]
